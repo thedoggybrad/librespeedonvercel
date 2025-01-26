@@ -15,11 +15,11 @@ function getChunkCount()
         || !ctype_digit($_GET['ckSize'])
         || (int) $_GET['ckSize'] <= 0
     ) {
-        return 4;
+        return 4;  // Default to 4 chunks if no size is specified
     }
 
     if ((int) $_GET['ckSize'] > 1024) {
-        return 1024;
+        return 1024; // Max 1024 chunks if the size is too large
     }
 
     return (int) $_GET['ckSize'];
@@ -52,16 +52,28 @@ function sendHeaders()
 // Determine how much data we should send
 $chunks = getChunkCount();
 
+// Reduce the chunk size to a smaller value (e.g., 128KB) to prevent issues with serverless execution
+$chunkSize = 131072;  // 128KB per chunk
+
 // Generate data
 if (function_exists('random_bytes')) {
-    $data = random_bytes(1048576);
+    $data = random_bytes($chunkSize);
 } else {
-    $data = openssl_random_pseudo_bytes(1048576);
+    $data = openssl_random_pseudo_bytes($chunkSize);
 }
 
-// Deliver chunks of 1048576 bytes
+// Deliver chunks
 sendHeaders();
 for ($i = 0; $i < $chunks; $i++) {
-    echo $data;
-    flush();
+    // Log for debugging (check Vercel logs to see these entries)
+    error_log('Sending chunk: ' . ($i + 1));
+    
+    echo $data;  // Output the chunk of random data
+    flush();      // Send it immediately to the client
+
+    // Log after sending the chunk
+    error_log('Chunk sent: ' . ($i + 1));
+
+    // Small delay to avoid overwhelming the serverless environment
+    usleep(100000);  // Sleep for 0.1 second between chunks (optional)
 }
