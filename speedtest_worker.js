@@ -45,8 +45,7 @@ var settings = {
 	time_ulGraceTime: 3, //time to wait in seconds before actually measuring ul speed (wait for buffers to fill)
 	time_dlGraceTime: 1.5, //time to wait in seconds before actually measuring dl speed (wait for TCP window to increase)
 	count_ping: 10, // number of pings to perform in ping test
-	url_dl: "random.dat",
-	// url_dl: "backend/garbage.php", // path to a large file or garbage.php, used for download test. must be relative to this js file
+	url_dl: "random.dat", // path to a large file, used for download test. must be relative to this js file
 	url_ul: "backend/empty.php", // path to an empty file, used for upload test. must be relative to this js file
 	url_ping: "backend/empty.php", // path to an empty file, used for ping test. must be relative to this js file
 	url_getIp: "backend/getIP.php", // path to getIP.php relative to this js file, or a similar thing that outputs the client's ip
