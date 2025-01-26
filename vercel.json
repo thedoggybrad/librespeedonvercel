@@ -35,6 +35,10 @@
   },
   "routes": [
     {
+      "src": "/random.dat",
+      "dest": "/random.dat"
+    },
+    {
       "src": "/speedtest.js",
       "dest": "/speedtest.js"
     },
