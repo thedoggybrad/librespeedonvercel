@@ -1,18 +1,46 @@
 {
   "functions": {
-    "api/backend/*.php": {
+    "api/backend/empty.php": {
       "runtime": "vercel-php@0.7.3",
       "maxDuration": 60
     },
-    "api/docker/*.php": {
+    "api/backend/garbage.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/backend/getIP.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/backend/getIP_ipInfo_apikey.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/backend/getIP_serverLocation.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/backend/getIP_util.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/docker/frontend.php": {
+      "runtime": "vercel-php@0.7.3",
+      "maxDuration": 60
+    },
+    "api/docker/standalone.php": {
       "runtime": "vercel-php@0.7.3",
       "maxDuration": 60
     }
   },
   "routes": [
     {
-      "src": "/api/(.*)", 
-      "dest": "/api/$1"
+      "src": "/speedtest.js",
+      "dest": "/speedtest.js"
+    },
+    {
+      "src": "/speedtest_worker.js",
+      "dest": "/speedtest_worker.js"
     },
     {
       "src": "/backend/(.*)",
@@ -23,7 +51,7 @@
       "dest": "/api/docker/$1"
     },
     {
-      "src": "/(.*)", 
+      "src": "/",
       "dest": "/index.html"
     }
   ]
