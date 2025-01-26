@@ -39,6 +39,10 @@
       "dest": "/speedtest.js"
     },
     {
+      "src": "/DOCKERFILE",
+      "dest": "/DOCKERFILE"
+    },
+    {
       "src": "/speedtest_worker.js",
       "dest": "/speedtest_worker.js"
     },
