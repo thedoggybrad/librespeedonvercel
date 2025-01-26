@@ -1,50 +1,30 @@
 {
   "functions": {
-    "api/backend/empty.php": {
+    "api/backend/*.php": {
       "runtime": "vercel-php@0.7.3",
       "maxDuration": 60
     },
-    "api/backend/garbage.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/backend/getIP.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/backend/getIP_ipInfo_apikey.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/backend/getIP_serverLocation.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/backend/getIP_util.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/docker/frontend.php": {
-      "runtime": "vercel-php@0.7.3",
-      "maxDuration": 60
-    },
-    "api/docker/standalone.php": {
+    "api/docker/*.php": {
       "runtime": "vercel-php@0.7.3",
       "maxDuration": 60
     }
   },
   "routes": [
     {
-      "src": "/",
-      "dest": "api/backend/empty.php"
+      "src": "/api/(.*)", 
+      "dest": "/api/$1"
     },
     {
       "src": "/backend/(.*)",
-      "dest": "api/backend/$1"
+      "dest": "/api/backend/$1"
     },
     {
       "src": "/docker/(.*)",
-      "dest": "api/docker/$1"
+      "dest": "/api/docker/$1"
+    },
+    {
+      "src": "/(.*)", 
+      "dest": "/index.html"
     }
   ]
 }
