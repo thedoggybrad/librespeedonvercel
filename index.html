@@ -11,7 +11,7 @@
 function I(i){return document.getElementById(i);}
 //INITIALIZE SPEEDTEST
 var s=new Speedtest(); //create speedtest object
-s.setParameter("telemetry_level","basic"); //disable telemetry
+s.setParameter("telemetry_level","none"); //disable telemetry
 
 var meterBk=/Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)?"#EAEAEA":"#80808040";
 var dlColor="#6060AA",
@@ -235,18 +235,6 @@ function initUI(){
 		position:absolute;
 		top:0; left:0; width:100%; height:100%;
 		z-index:1;
-	}
-	#shareArea{
-		width:95%;
-		max-width:40em;
-		margin:0 auto;
-		margin-top:2em;
-	}
-	#shareArea > *{
-		display:block;
-		width:100%;
-		height:auto;
-		margin: 0.25em 0;
 	}
 	div.testGroup{
 		display:block;
