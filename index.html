@@ -138,6 +138,10 @@ function initUI(){
 	h1{
 		color:#404040;
 	}
+	@keyframes spin{
+		0%{transform:rotate(0deg);}
+		100%{transform:rotate(359deg);}
+	}
 	#startStopBtn{
 		display:inline-block;
 		margin:0 auto;
@@ -165,6 +169,13 @@ function initUI(){
 	}
 	#startStopBtn.running:before{
 		content:"Abort";
+	}
+	#serverArea{
+		margin-top:1em;
+	}
+	#server{
+		font-size:1em;
+		padding:0.2em;
 	}
 	#test{
 		margin-top:2em;
@@ -229,49 +240,54 @@ function initUI(){
 		display:block;
         margin: 0 auto;
 	}
-	#shareArea{
-		width:95%;
-		max-width:40em;
-		margin:0 auto;
-		margin-top:2em;
-	}
-	#shareArea > *{
-		display:block;
-		width:100%;
-		height:auto;
-		margin: 0.25em 0;
-	}
-	#privacyPolicy{
-        position:fixed;
-        top:2em;
-        bottom:2em;
-        left:2em;
-        right:2em;
-        overflow-y:auto;
-        width:auto;
-        height:auto;
-        box-shadow:0 0 3em 1em #000000;
-        z-index:999999;
-        text-align:left;
-        background-color:#FFFFFF;
-        padding:1em;
-	}
-	a.privacy{
-        text-align:center;
-        font-size:0.8em;
-        color:#808080;
-        padding: 0 3em;
-    }
-    div.closePrivacyPolicy {
-        width: 100%;
-        text-align: center;
-    }
-    div.closePrivacyPolicy a.privacy {
-        padding: 1em 3em;
-    }
 	@media all and (max-width:40em){
 		body{
 			font-size:0.8em;
+		}
+	}
+	div.visible{
+		animation: fadeIn 0.4s;
+		display:block;
+	}
+	div.hidden{
+		animation: fadeOut 0.4s;
+		display:none;
+	}
+	@keyframes fadeIn{
+		0%{
+			opacity:0;
+		}
+		100%{
+			opacity:1;
+		}
+	}
+	@keyframes fadeOut{
+		0%{
+			display:block;
+			opacity:1;
+		}
+		100%{
+			display:block;
+			opacity:0;
+		}
+	}
+	@media all and (prefers-color-scheme: dark){
+		html,body,#loading{
+			background:#202020;
+			color:#F4F4F4;
+			color-scheme:dark;
+		}
+		h1{
+			color:#E0E0E0;
+		}
+		a{
+			color:#9090FF;
+		}
+		#privacyPolicy{
+			background:#000000;
+		}
+		#resultsImg{
+			filter: invert(1);
 		}
 	}
 </style>
