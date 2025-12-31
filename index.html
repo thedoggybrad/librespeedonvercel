@@ -11,7 +11,6 @@
 function I(i){return document.getElementById(i);}
 //INITIALIZE SPEEDTEST
 var s=new Speedtest(); //create speedtest object
-s.setParameter("telemetry_level","none"); //disable telemetry
 
 var meterBk=/Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)?"#EAEAEA":"#80808040";
 var dlColor="#6060AA",
@@ -67,26 +66,12 @@ function startStop(){
 	}else{
 		//test is not running, begin
 		I("startStopBtn").className="running";
-		I("shareArea").style.display="none";
 		s.onupdate=function(data){
             uiData=data;
 		};
 		s.onend=function(aborted){
             I("startStopBtn").className="";
             updateUI(true);
-            if(!aborted){
-                //if testId is present, show sharing panel, otherwise do nothing
-                try{
-                    var testId=uiData.testId;
-                    if(testId!=null){
-                        var shareURL=window.location.href.substring(0,window.location.href.lastIndexOf("/"))+"/results/?id="+testId;
-                        I("resultsImg").src=shareURL;
-                        I("resultsURL").value=shareURL;
-                        I("testId").innerHTML=testId;
-                        I("shareArea").style.display="";
-                    }
-                }catch(e){}
-            }
 		};
 		s.start();
 	}
@@ -135,13 +120,6 @@ function initUI(){
 		text-align:center;
 		font-family:"Roboto",sans-serif;
 	}
-	h1{
-		color:#404040;
-	}
-	@keyframes spin{
-		0%{transform:rotate(0deg);}
-		100%{transform:rotate(359deg);}
-	}
 	#startStopBtn{
 		display:inline-block;
 		margin:0 auto;
@@ -169,13 +147,6 @@ function initUI(){
 	}
 	#startStopBtn.running:before{
 		content:"Abort";
-	}
-	#serverArea{
-		margin-top:1em;
-	}
-	#server{
-		font-size:1em;
-		padding:0.2em;
 	}
 	#test{
 		margin-top:2em;
@@ -245,62 +216,22 @@ function initUI(){
 			font-size:0.8em;
 		}
 	}
-	div.visible{
-		animation: fadeIn 0.4s;
-		display:block;
-	}
-	div.hidden{
-		animation: fadeOut 0.4s;
-		display:none;
-	}
-	@keyframes fadeIn{
-		0%{
-			opacity:0;
-		}
-		100%{
-			opacity:1;
-		}
-	}
-	@keyframes fadeOut{
-		0%{
-			display:block;
-			opacity:1;
-		}
-		100%{
-			display:block;
-			opacity:0;
-		}
-	}
-	@media all and (prefers-color-scheme: dark){
-		html,body,#loading{
+    @media all and (prefers-color-scheme: dark){
+		html,body{
 			background:#202020;
 			color:#F4F4F4;
 			color-scheme:dark;
 		}
-		h1{
-			color:#E0E0E0;
-		}
-		a{
-			color:#9090FF;
-		}
-		#privacyPolicy{
-			background:#000000;
-		}
-		#resultsImg{
-			filter: invert(1);
-		}
-	}
 </style>
-<title>LibreSpeed on Vercel - Speedtest</title>
+<title>LibreSpeed - Speed Test</title>
 </head>
 <body>
-<h1>LibreSpeed on Vercel</h1>
-<h3>A port of LibreSpeed by <a href="https://github.com/thedoggybrad">TheDoggyBrad</a> on Vercel.</h3>
-        <p>Disclaimer: Reliability of speedtest results are not guranteed.</p>
+<h1>LibreSpeed - Speed Test</h1>
+<p>Free and Open Source Speed Test. No Flash, No Java, No Websocket, No Nonsense.</p>
+<div id="testWrapper">
 	<div id="startStopBtn" onclick="startStop()"></div>
-  <br>
 	<div id="test">
-		<div class="testGroup">
+        <div class="testGroup">
 			<div class="testArea2">
 				<div class="testName">Ping</div>
 				<div id="pingText" class="meterText" style="color:#AA6060"></div>
@@ -329,15 +260,8 @@ function initUI(){
 		<div id="ipArea">
 			<span id="ip"></span>
 		</div>
-		<div id="shareArea" style="display:none">
-			<h3>Share results</h3>
-			<p>Test ID: <span id="testId"></span></p>
-			<input type="text" value="" id="resultsURL" readonly="readonly" onclick="this.select();this.focus();this.select();document.execCommand('copy');alert('Link copied')"/>
-			<img src="" id="resultsImg" />
-		</div>
 	</div>
 </div>
 <script type="text/javascript">setTimeout(function(){initUI()},100);</script>
-
 </body>
 </html>
