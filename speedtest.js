@@ -23,7 +23,13 @@ Speedtest.prototype = {
   getState: function() {
     return this._state;
   },
-	
+  /**
+   * Change one of the test settings from their defaults.
+   * - parameter: string with the name of the parameter that you want to set
+   * - value: new value for the parameter
+   *
+   * Invalid values or nonexistant parameters will be ignored by the speed test worker.
+   */
   setParameter: function(parameter, value) {
     if (this._state == 3)
       throw "You cannot change the test settings while running the test";
@@ -32,7 +38,10 @@ Speedtest.prototype = {
         this._originalExtra=this._settings.telemetry_extra;
     }
   },
-
+  /**
+   * Used internally to check if a server object contains all the required elements.
+   * Also fixes the server URL if needed.
+   */
   _checkServerDefinition: function(server) {
     try {
       if (typeof server.name !== "string")
@@ -55,7 +64,18 @@ Speedtest.prototype = {
       throw "Invalid server definition";
     }
   },
-
+  /**
+   * Add a test point (multiple points of test)
+   * server: the server to be added as an object. Must contain the following elements:
+   *  {
+   *       name: "User friendly name",
+   *       server:"http://yourBackend.com/",   URL to your server. You can specify http:// or https://. If your server supports both, just write // without the protocol
+   *       dlURL:"garbage.php"   path to garbage.php or its replacement on the server
+   *       ulURL:"empty.php"   path to empty.php or its replacement on the server
+   *       pingURL:"empty.php"   path to empty.php or its replacement on the server. This is used to ping the server by this selector
+   *       getIpURL:"getIP.php"   path to getIP.php or its replacement on the server
+   *   }
+   */
   addTestPoint: function(server) {
     this._checkServerDefinition(server);
     if (this._state == 0) this._state = 1;
@@ -63,11 +83,25 @@ Speedtest.prototype = {
     this._settings.mpot = true;
     this._serverList.push(server);
   },
-
+  /**
+   * Same as addTestPoint, but you can pass an array of servers
+   */
   addTestPoints: function(list) {
     for (let i = 0; i < list.length; i++) this.addTestPoint(list[i]);
   },
-
+  /**
+   * Load a JSON server list from URL (multiple points of test)
+   * url: the url where the server list can be fetched. Must be an array with objects containing the following elements:
+   *  {
+   *       "name": "User friendly name",
+   *       "server":"http://yourBackend.com/",   URL to your server. You can specify http:// or https://. If your server supports both, just write // without the protocol
+   *       "dlURL":"garbage.php"   path to garbage.php or its replacement on the server
+   *       "ulURL":"empty.php"   path to empty.php or its replacement on the server
+   *       "pingURL":"empty.php"   path to empty.php or its replacement on the server. This is used to ping the server by this selector
+   *       "getIpURL":"getIP.php"   path to getIP.php or its replacement on the server
+   *   }
+   * result: callback to be called when the list is loaded correctly. An array with the loaded servers will be passed to this function, or null if it failed
+   */
   loadServerList: function(url,result) {
     if (this._state == 0) this._state = 1;
     if (this._state != 1) throw "You can't add a server after server selection";
