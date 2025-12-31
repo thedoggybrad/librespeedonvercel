@@ -17,3 +17,4 @@ function getClientIp() {
 
     return preg_replace('/^::ffff:/', '', $ip);
 }
+
