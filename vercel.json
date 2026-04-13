@@ -25,7 +25,7 @@
       "maxDuration": 60
     },
     "api/docker/frontend.php": {
-      "runtime": "vercel-php@0.9.04",
+      "runtime": "vercel-php@0.9.0",
       "maxDuration": 60
     },
     "api/docker/standalone.php": {
